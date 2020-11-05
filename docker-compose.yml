@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  torture:
+    image: meetrix/jitsi-meet-torture
+    volumes:
+      - ./video/FourPeople_1280x720_30.y4m:/usr/share/jitsi-meet-torture/resources/FourPeople_1280x720_30.y4m
+      - ./TestCase/MalleusJitsificus.java:/jitsi-meet-torture/src/test/java/org/jitsi/meet/test/MalleusJitsificus.java
+  hub:
+    image: selenium/hub:3.141.59
+  node:
+    image: meetrix/jitsi-meet-torture-selenium-node
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - hub
+    environment:
+      HUB_HOST: hub
